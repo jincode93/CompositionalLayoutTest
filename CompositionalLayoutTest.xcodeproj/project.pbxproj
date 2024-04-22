@@ -17,6 +17,8 @@
 		1A29A2C42BD639980044FFC0 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 1A29A2C32BD639980044FFC0 /* SnapKit */; };
 		1A29A2C62BD639980044FFC0 /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 1A29A2C52BD639980044FFC0 /* SnapKit-Dynamic */; };
 		1A29A2C82BD63B650044FFC0 /* HomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A29A2C72BD63B650044FFC0 /* HomeModel.swift */; };
+		1A29A2CA2BD644060044FFC0 /* HorizontalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A29A2C92BD644060044FFC0 /* HorizontalCell.swift */; };
+		1A29A2CC2BD648220044FFC0 /* ListCarouselCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A29A2CB2BD648220044FFC0 /* ListCarouselCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +31,8 @@
 		1A29A2B62BD636FF0044FFC0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1A29A2BD2BD639250044FFC0 /* BannerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerCell.swift; sourceTree = "<group>"; };
 		1A29A2C72BD63B650044FFC0 /* HomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeModel.swift; sourceTree = "<group>"; };
+		1A29A2C92BD644060044FFC0 /* HorizontalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalCell.swift; sourceTree = "<group>"; };
+		1A29A2CB2BD648220044FFC0 /* ListCarouselCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCarouselCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +84,8 @@
 			isa = PBXGroup;
 			children = (
 				1A29A2BD2BD639250044FFC0 /* BannerCell.swift */,
+				1A29A2C92BD644060044FFC0 /* HorizontalCell.swift */,
+				1A29A2CB2BD648220044FFC0 /* ListCarouselCell.swift */,
 			);
 			path = cells;
 			sourceTree = "<group>";
@@ -168,6 +174,8 @@
 				1A29A2A92BD636FE0044FFC0 /* AppDelegate.swift in Sources */,
 				1A29A2C82BD63B650044FFC0 /* HomeModel.swift in Sources */,
 				1A29A2AB2BD636FE0044FFC0 /* SceneDelegate.swift in Sources */,
+				1A29A2CC2BD648220044FFC0 /* ListCarouselCell.swift in Sources */,
+				1A29A2CA2BD644060044FFC0 /* HorizontalCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

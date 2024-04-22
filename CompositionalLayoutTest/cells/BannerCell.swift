@@ -22,11 +22,13 @@ final class BannerCell: UICollectionViewCell {
     private func setUI() {
         self.addSubview(backgroundImage)
         self.addSubview(titleLabel)
-    
+        
+        titleLabel.font = .systemFont(ofSize: 20, weight: .semibold)
         backgroundImage.contentMode = .scaleAspectFill
         
         titleLabel.snp.makeConstraints { make in
-            make.center.equalToSuperview()
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview().offset(-10)
         }
         
         backgroundImage.snp.makeConstraints { make in
