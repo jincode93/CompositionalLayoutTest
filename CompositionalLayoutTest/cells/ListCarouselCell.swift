@@ -12,6 +12,7 @@ class ListCarouselCell: UICollectionViewCell {
     static let id = "ListCarouselCell"
     
     private let mainImage = UIImageView()
+    private let stackView = UIStackView()
     private let titleLabel = UILabel()
     private let descLabel = UILabel()
     
@@ -22,23 +23,23 @@ class ListCarouselCell: UICollectionViewCell {
     
     private func setUI() {
         addSubview(mainImage)
-        addSubview(titleLabel)
-        addSubview(descLabel)
+        addSubview(stackView)
+        stackView.addArrangedSubview(titleLabel)
+        stackView.addArrangedSubview(descLabel)
+        
+        mainImage.contentMode = .scaleAspectFill
+        stackView.axis = .vertical
+        titleLabel.font = .systemFont(ofSize: 16, weight: .semibold)
+        descLabel.font = .systemFont(ofSize: 12)
         
         mainImage.snp.makeConstraints { make in
             make.leading.top.bottom.equalToSuperview()
             make.width.equalTo(60)
         }
         
-        titleLabel.snp.makeConstraints { make in
-            make.top.trailing.equalToSuperview()
+        stackView.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
             make.leading.equalTo(mainImage.snp.trailing).offset(8)
-        }
-        
-        descLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(8)
-            make.leading.equalTo(mainImage.snp.trailing).offset(8)
-            make.trailing.equalToSuperview()
         }
     }
     

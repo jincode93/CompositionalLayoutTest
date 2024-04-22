@@ -11,16 +11,19 @@ import SnapKit
 fileprivate enum Section: Hashable {
     case banner
     case horizontal
+    case listCarousel
 }
 
 fileprivate enum Item: Hashable {
     case bannerItem(HomeModel)
     case horizontalItem(HomeModel)
+    case listCarouselItem(HomeModel)
 }
 
 class HomeViewController: UIViewController {
     let bannerImageUrl = "https://img.hankyung.com/photo/202307/01.34116003.1.jpg"
     let horizontalImageUrl = "https://img.hankyung.com/photo/202307/01.34116002.1.jpg"
+    let listImageUrl = "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FF1vZT%2FbtrslU6PmAF%2FcVXxfCK1S3iBo8WmwDVsF0%2Fimg.jpg"
     
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
     private var dataSource: UICollectionViewDiffableDataSource<Section, Item>?
@@ -44,6 +47,7 @@ class HomeViewController: UIViewController {
     private func setCollectionView() {
         collectionView.register(BannerCell.self, forCellWithReuseIdentifier: BannerCell.id)
         collectionView.register(HorizontalCell.self, forCellWithReuseIdentifier: HorizontalCell.id)
+        collectionView.register(ListCarouselCell.self, forCellWithReuseIdentifier: ListCarouselCell.id)
         collectionView.setCollectionViewLayout(createLayout(), animated: true)
     }
     
@@ -68,6 +72,14 @@ class HomeViewController: UIViewController {
                     
                     cell.config(title: item.title, desc: item.desc, imageUrl: item.imageUrl)
                     return cell
+                case .listCarouselItem(let item):
+                    guard let cell = collectionView.dequeueReusableCell(
+                        withReuseIdentifier: ListCarouselCell.id,
+                        for: indexPath
+                    ) as? ListCarouselCell else { return UICollectionViewCell() }
+                    
+                    cell.config(title: item.title, desc: item.desc, imageUrl: item.imageUrl)
+                    return cell
                 }
             }
         )
@@ -79,40 +91,31 @@ class HomeViewController: UIViewController {
         // MARK: - BannerSection
         let bannerSection = Section.banner
         snapshot.appendSections([bannerSection])
-        let bannerItems = [
-            Item.bannerItem(HomeModel(title: "춘식이 1번",
-                                      imageUrl: bannerImageUrl)),
-            Item.bannerItem(HomeModel(title: "춘식이 2번",
-                                      imageUrl: bannerImageUrl)),
-            Item.bannerItem(HomeModel(title: "춘식이 3번",
+        let bannerItems: [Item] = [Int](1...3).map { num in
+            Item.bannerItem(HomeModel(title: "춘식이 \(num)번",
                                       imageUrl: bannerImageUrl))
-        ]
+        }
         snapshot.appendItems(bannerItems, toSection: bannerSection)
         
         // MARK: - HorizontalSection
         let horizontalSection = Section.horizontal
         snapshot.appendSections([horizontalSection])
-        let horizontalItems = [
-            Item.horizontalItem(HomeModel(title: "춘식이 1번",
-                                      desc: "1번 춘식이는 귀여워",
-                                      imageUrl: horizontalImageUrl)),
-            Item.horizontalItem(HomeModel(title: "춘식이 2번",
-                                      desc: "2번 춘식이는 귀여워",
-                                      imageUrl: horizontalImageUrl)),
-            Item.horizontalItem(HomeModel(title: "춘식이 3번",
-                                      desc: "3번 춘식이는 귀여워",
-                                      imageUrl: horizontalImageUrl)),
-            Item.horizontalItem(HomeModel(title: "춘식이 4번",
-                                      desc: "4번 춘식이는 귀여워",
-                                      imageUrl: horizontalImageUrl)),
-            Item.horizontalItem(HomeModel(title: "춘식이 5번",
-                                      desc: "5번 춘식이는 귀여워",
-                                      imageUrl: horizontalImageUrl)),
-            Item.horizontalItem(HomeModel(title: "춘식이 6번",
-                                      desc: "6번 춘식이는 귀여워",
-                                      imageUrl: horizontalImageUrl))
-        ]
+        let horizontalItems: [Item] = [Int](1...6).map { num in
+            Item.horizontalItem(HomeModel(title: "춘식이 \(num)번",
+                                          desc: "\(num)번 춘식이는 귀여워",
+                                          imageUrl: horizontalImageUrl))
+        }
         snapshot.appendItems(horizontalItems, toSection: horizontalSection)
+        
+        // MARK: - ListCarouselSection
+        let listCarouselSection = Section.listCarousel
+        snapshot.appendSections([listCarouselSection])
+        let listCarouselItems: [Item] = [Int](1...9).map { num in
+            Item.listCarouselItem(HomeModel(title: "춘식이 \(num)번",
+                                            desc: "\(num)번 춘식이는 귀여워",
+                                            imageUrl: listImageUrl))
+        }
+        snapshot.appendItems(listCarouselItems, toSection: listCarouselSection)
         
         dataSource?.apply(snapshot)
     }
@@ -128,6 +131,8 @@ class HomeViewController: UIViewController {
                 return self?.createBannerSection()
             case .horizontal:
                 return self?.createHorizontalSection()
+            case .listCarousel:
+                return self?.createListCarouselSection()
             default:
                 return self?.createBannerSection()
             }
@@ -162,6 +167,23 @@ class HomeViewController: UIViewController {
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20)
         section.orthogonalScrollingBehavior = .continuous
+        return section
+    }
+    
+    private func createListCarouselSection() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                              heightDimension: .absolute(60))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                               heightDimension: .estimated(230))
+        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize,
+                                                     repeatingSubitem: item,
+                                                     count: 3)
+        group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0)
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .groupPaging
         return section
     }
 }
